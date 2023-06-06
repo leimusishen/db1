@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.mapper.TeacherCourceMapper">
+
+    <resultMap id="TeacherCourceResultMap" type="com.demo.model.TeacherCource">
+        <id property="id" column="id"/>
+        <result property="teacherId" column="teacher_id"/>
+        <result property="username" column="username"/>
+        <result property="name" column="name"/>
+        <result property="profession" column="profession"/>
+        <result property="grade" column="grade"/>
+        <result property="term" column="term"/>
+        <result property="courceId" column="cource_id"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, teacher_id, username, name, profession, grade, term, cource_id
+    </sql>
+
+    <select id="getTeacherCourceById" resultMap="TeacherCourceResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM jhk_teacher_cource
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insertTeacherCource" parameterType="com.demo.model.TeacherCource">
+        INSERT INTO jhk_teacher_cource
+            (teacher_id, username, name, profession, grade, term, cource_id)
+        VALUES
+            (#{teacherId}, #{username}, #{name}, #{profession}, #{grade}, #{term}, #{courceId})
+    </insert>
+
+    <update id="updateTeacherCource" parameterType="com.demo.model.TeacherCource">
+        UPDATE jhk_teacher_cource
+        SET teacher_id = #{teacherId},
+            username = #{username},
+            name = #{name},
+            profession = #{profession},
+            grade = #{grade},
+            term = #{term},
+            cource_id = #{courceId}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteTeacherCource" parameterType="Long">
+        DELETE FROM jhk_teacher_cource
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

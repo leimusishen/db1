@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.mapper.TeacherMapper">
+
+    <sql id="teacherColumns">
+        id, username, password, real_name, level, school, email, phone, sex, create_time
+    </sql>
+
+    <resultMap id="teacherResultMap" type="com.demo.model.Teacher">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="realName" column="real_name"/>
+        <result property="level" column="level"/>
+        <result property="school" column="school"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="sex" column="sex"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="getAllTeachers" resultMap="teacherResultMap">
+        SELECT <include refid="teacherColumns"/>
+        FROM jhk_teacher
+    </select>
+
+    <select id="getTeacherById" parameterType="java.lang.Long" resultMap="teacherResultMap">
+        SELECT <include refid="teacherColumns"/>
+        FROM jhk_teacher
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insertTeacher" parameterType="com.demo.model.Teacher">
+        INSERT INTO jhk_teacher (<include refid="teacherColumns"/>)
+        VALUES (#{username}, #{password}, #{realName}, #{level}, #{school}, #{email}, #{phone}, #{sex}, #{createTime})
+    </insert>
+
+    <update id="updateTeacher" parameterType="com.demo.model.Teacher">
+        UPDATE jhk_teacher
+        SET username = #{username}, password = #{password}, real_name = #{realName},
+            level = #{level}, school = #{school}, email = #{email}, phone = #{phone}, sex = #{sex},
+            create_time = #{createTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteTeacher" parameterType="java.lang.Long">
+        DELETE FROM jhk_teacher
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

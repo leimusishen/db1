@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.mapper.StudentCourceMapper">
+
+    <sql id="StudentCourceColumns">
+        id, student_id, course_id, name, score, point, credits, term, year
+    </sql>
+
+    <resultMap id="StudentCourceResultMap" type="com.demo.model.StudentCourse">
+        <id property="id" column="id" />
+        <result property="studentId" column="student_id" />
+        <result property="courseId" column="course_id" />
+        <result property="name" column="name" />
+        <result property="score" column="score" />
+        <result property="point" column="point" />
+        <result property="credits" column="credits" />
+        <result property="term" column="term" />
+        <result property="year" column="year" />
+    </resultMap>
+
+    <select id="getStudentCourseById" resultMap="StudentCourceResultMap">
+        SELECT <include refid="StudentCourceColumns" /> FROM jhk_student_cource WHERE id = #{id}
+    </select>
+
+    <select id="getAllStudentCourses" resultMap="StudentCourceResultMap">
+        SELECT <include refid="StudentCourceColumns" /> FROM jhk_student_cource
+    </select>
+
+    <insert id="insertStudentCourse" parameterType="com.demo.model.StudentCourse">
+        INSERT INTO jhk_student_cource (<include refid="StudentCourceColumns" />)
+        VALUES (#{studentId}, #{courseId}, #{name}, #{score}, #{point}, #{credits}, #{term}, #{year})
+    </insert>
+
+    <update id="updateStudentCourse" parameterType="com.demo.model.StudentCourse">
+        UPDATE jhk_student_cource
+        SET student_id = #{studentId}, course_id = #{courseId}, name = #{name}, score = #{score},
+            point = #{point}, credits = #{credits}, term = #{term}, year = #{year}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteStudentCourseById" parameterType="Long">
+        DELETE FROM jhk_student_cource WHERE id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.dao.StudentDao">
+
+    <resultMap id="BaseResultMap" type="com.demo.model.Student">
+        <id column="id" property="id" />
+        <result column="username" property="username" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, username,password,real_name,admission_time,email,profession,grade,phone,sex,credit_total
+    </sql>
+
+    <insert id="insert" parameterType="com.demo.model.Student">
+        INSERT INTO jhk_student (username, password, real_name, level, school, admission_time, email, profession, grade, phone, sex, create_time)
+        VALUES (#{username}, #{password}, #{realName}, #{level}, #{school}, #{admissionTime}, #{email}, #{profession}, #{grade}, #{phone}, #{sex}, #{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.demo.model.Student">
+        UPDATE jhk_student
+        SET username = #{username}, password = #{password}, real_name = #{realName}, level = #{level}, school = #{school},
+            admission_time = #{admissionTime}, email = #{email}, profession = #{profession}, grade = #{grade},
+            phone = #{phone}, sex = #{sex}, create_time = #{createTime}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM jhk_student WHERE id = #{id}
+    </delete>
+
+    <select id="findById" resultMap="BaseResultMap" parameterType="int">
+        SELECT <include refid="Base_Column_List" /> FROM jhk_student WHERE id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" /> FROM jhk_student
+    </select>
+
+    <select id="findByUsername" resultMap="BaseResultMap" parameterType="String">
+        SELECT <include refid="Base_Column_List" /> FROM jhk_student WHERE username = #{username}
+    </select>
+
+    <!-- 添加其他根据属性查询的SQL语句 -->
+
+</mapper>
